@@ -1,0 +1,12 @@
+package com.example.labtest1.feeskeeper.myplaces3
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+class addAct : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_add)
+    }
+}
