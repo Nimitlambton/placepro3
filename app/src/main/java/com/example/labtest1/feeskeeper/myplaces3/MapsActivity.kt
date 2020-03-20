@@ -10,12 +10,17 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.feeViewModel
+import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.mylocation
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PointOfInterest
@@ -25,21 +30,22 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 
 
+private lateinit var wordViewModel: feeViewModel
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+  private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var placesClient: PlacesClient
 
-    private val PERTH = LatLng(-31.952854, 115.857342)
+    private var PERTH = LatLng(-31.952854, 115.857342)
+    private var title = "blue"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
@@ -48,6 +54,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         setupLocationClient()
+
     }
 
 
@@ -73,16 +80,68 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
+        wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
+
+        wordViewModel.allfee.observe(this, Observer { words ->
+
+            // Update the cached copy of the words in the adapter.
+
+
+            words?.let {
+
+                mMap.clear()
+
+                Toast.makeText(this, it.size.toString(), Toast.LENGTH_SHORT).show()
+
+                System.out.println("hgello?????"+it.last().latitude1   )
+
+                PERTH =  LatLng(it.last().latitude1 ,it.last().longitude1 )
+
+              title = it.last().title1
+
+                mMap.clear()
+
+                 for (loca in it){
+
+
+                     setloc(loca)
+
+                 }
+
+
+
+
+//                mMap.addMarker(
+//
+//                    MarkerOptions()
+//                        .position(PERTH).title(title))
+
+
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+    }
+
+    private fun setloc(loca: mylocation) {
+
+
+        var PERTH = LatLng(loca.latitude1,loca.longitude1)
+         var title = loca.title1
 
 
         mMap.addMarker(
 
-            MarkerOptions().position(LatLng(20.0, 40.0)).title("Hello world"))
-
-        mMap.addMarker(
             MarkerOptions()
-                .position(PERTH)
-                .title("Hello world"))
+                .position(PERTH).title(title))
 
 
 
