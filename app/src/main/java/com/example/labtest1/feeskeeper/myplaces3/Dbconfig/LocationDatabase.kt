@@ -27,9 +27,9 @@ abstract class LocationDatabase : RoomDatabase() {
                 scope.launch {
                     var fee = database.locationDao()
                     // Delete all content here.
-                   // fee.deleteAll()
+                    //fee.deleteAll()
                     val le = mylocation(0,4.5,6.0,"hellwoorld","thisisworld")
-                   fee.insert(le)
+                  // fee.insert(le)
                 }
             }
         }
