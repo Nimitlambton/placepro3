@@ -120,6 +120,7 @@ private lateinit var wordViewModel: feeViewModel
 
     private fun ShowaddDetails() {
         val intent = Intent(this , addAct::class.java)
+        addAct.isupdate = false
         startActivity(intent)
     }
 
@@ -131,7 +132,7 @@ private lateinit var wordViewModel: feeViewModel
 
           val myToast = Toast.makeText(applicationContext,hel.title+hel.id.toString(),Toast.LENGTH_SHORT)
           myToast.show()
-         // gotoupdate()
+          gotoupdate()
 
 
           return true
@@ -139,7 +140,8 @@ private lateinit var wordViewModel: feeViewModel
 
 
       private fun gotoupdate() {
-          val intent = Intent(this , updateAct::class.java)
+          val intent = Intent(this , addAct::class.java)
+          addAct.isupdate = true
           startActivity(intent)
       }
 
