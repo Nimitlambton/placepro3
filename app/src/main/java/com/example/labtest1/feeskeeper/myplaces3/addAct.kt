@@ -27,7 +27,7 @@ class addAct : AppCompatActivity() {
     companion object {
 
         var isupdate = false
-        var booze = ""
+        var booze = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,22 +50,17 @@ class addAct : AppCompatActivity() {
 
 
             wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
+            wordViewModel.allfee.observe(this, Observer { words ->
 
+                words.let {
 
-            wordViewModel?.allfee?.observe(this, Observer { words ->
+                    if(it != null && isupdate){
 
-                words?.let {
-
-                    if(it !=null){
-
-
-
-                        id =  it[booze.toInt()]?.loction_Id2
-                        longi.setText(it[booze.toInt()]?.latitude1.toString())
-                        lati.setText(it[booze.toInt()]?.longitude1.toString())
-                        locationsub.setText(it[booze.toInt()]?.subtitle1)
-                        locationtitle.setText(it[booze.toInt()]?.title1)
-
+                        id =  it[booze.toInt()].loction_Id2
+                        longi.setText(it[booze.toInt()].latitude1.toString())
+                        lati.setText(it[booze.toInt()].longitude1.toString())
+                        locationsub.setText(it[booze.toInt()].subtitle1)
+                        locationtitle.setText(it[booze.toInt()].title1)
 
 
                     }
@@ -91,7 +86,6 @@ class addAct : AppCompatActivity() {
                 wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
 
                 if(!isupdate) {
-                    val replyIntent = Intent()
 
                     if (TextUtils.isEmpty(longi.text) && TextUtils.isEmpty(lati.text) && TextUtils.isEmpty(
                             locationsub.text
@@ -162,12 +156,7 @@ class addAct : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.del) {
-
-
-            wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
-
             wordViewModel.delete(id)
-
             isupdate = false
             finish()
 

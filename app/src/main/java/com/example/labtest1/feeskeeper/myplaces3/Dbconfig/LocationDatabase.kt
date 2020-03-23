@@ -28,8 +28,8 @@ abstract class LocationDatabase : RoomDatabase() {
                     var fee = database.locationDao()
                     // Delete all content here.
                    // fee.deleteAll()
-                    val le = mylocation(0,4.5,6.0,"hellwoorld","thisisworld")
-                  // fee.insert(le)
+                   // val le = mylocation(0,4.5,6.0,"hellwoorld","thisisworld")
+                   //fee.insert(le)
                 }
             }
         }
