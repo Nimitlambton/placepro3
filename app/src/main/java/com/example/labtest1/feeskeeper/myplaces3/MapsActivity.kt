@@ -1,30 +1,19 @@
 package com.example.labtest1.feeskeeper.myplaces3
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.feeViewModel
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.mylocation
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.FetchPlaceRequest
-import com.google.android.libraries.places.api.net.PlacesClient
 
 
 private lateinit var wordViewModel: feeViewModel
@@ -34,7 +23,7 @@ private lateinit var wordViewModel: feeViewModel
       private lateinit var mMap: GoogleMap
       private lateinit var myMarker :  Marker
       private var PERTH = LatLng(-31.952854, 115.857342)
-      private var title = "blue"
+      private var title2 = "blue"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,20 +46,15 @@ private lateinit var wordViewModel: feeViewModel
             words?.let {
 
                 mMap.clear()
-                for (loca in it){
+                for (loca in it)  {
+
+                    val myToast = Toast.makeText(applicationContext,it.size.toString(),Toast.LENGTH_SHORT)
+                    myToast.show()
 
 
-
-
-
-                    setloc(loca)
-
+                    setloc(loca,it.indexOf(loca))
 
                 }
-
-
-
-
             }
         })
 
@@ -83,22 +67,43 @@ private lateinit var wordViewModel: feeViewModel
 
     }
 
-    private fun setloc(loca: mylocation) {
+    private fun setloc(loca: mylocation ,pos : Int) {
 
         var PERTH = LatLng(loca.latitude1,loca.longitude1)
 
-        var title = loca.title1
+        var title2 = loca.title1
 
         mMap.setOnMarkerClickListener(this);
 
-        myMarker =  mMap.addMarker(MarkerOptions().position(PERTH).title(title))
 
+        myMarker =  mMap.addMarker(MarkerOptions().position(PERTH).title(title2))
+
+        myMarker.tag = pos
+
+         setidd(title2)
 
 
         }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+      private fun setidd(title: String): String {
 
+          return title2
+
+
+      }
+
+      private fun getidd(): String {
+
+          return title2
+
+      }
+
+
+
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         // Inflate the menu; this adds items to the action bar if it is
         super.onCreateOptionsMenu(menu)
@@ -126,24 +131,23 @@ private lateinit var wordViewModel: feeViewModel
 
       override fun onMarkerClick(hel: Marker): Boolean {
 
-
-
-
-
-          val myToast = Toast.makeText(applicationContext,hel.title+hel.id.toString(),Toast.LENGTH_SHORT)
+          val myToast = Toast.makeText(applicationContext,hel.id.toString(),Toast.LENGTH_SHORT)
           myToast.show()
-          gotoupdate()
+          gotoupdate(hel.tag.toString())
 
 
           return true
       }
 
 
-      private fun gotoupdate() {
+      private fun gotoupdate(title: String) {
           val intent = Intent(this , addAct::class.java)
+         addAct.booze = title
           addAct.isupdate = true
           startActivity(intent)
       }
+
+
 
   }
 

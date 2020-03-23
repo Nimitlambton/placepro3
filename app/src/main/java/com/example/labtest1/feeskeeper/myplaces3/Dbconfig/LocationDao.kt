@@ -1,10 +1,7 @@
 package com.example.labtest1.feeskeeper.myplaces3.Dbconfig
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface LocationDao {
@@ -13,7 +10,7 @@ interface LocationDao {
     fun getalldata(): LiveData<List<mylocation>>
 
     //insert all data
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     suspend fun insert(location : mylocation)
 
     //Delete all data
@@ -22,5 +19,12 @@ interface LocationDao {
 
     @Query("DELETE FROM location_table WHERE loction_Id = :userId")
     suspend fun deleteByUserId(userId: Int)
+
+    //fetch record by id
+
+
+    @Update
+    suspend fun update(location : mylocation)
+
 
 }
