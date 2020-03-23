@@ -28,11 +28,9 @@ private lateinit var wordViewModel: feeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
     }
 
 
@@ -43,18 +41,25 @@ private lateinit var wordViewModel: feeViewModel
          wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
         wordViewModel.allfee.observe(this, Observer { words ->
 
+
+
             words?.let {
 
-                mMap.clear()
-                for (loca in it)  {
 
-                    val myToast = Toast.makeText(applicationContext,it.size.toString(),Toast.LENGTH_SHORT)
-                    myToast.show()
+                if(it!=null){
 
 
-                    setloc(loca,it.indexOf(loca))
+                    mMap.clear()
+                    for (loca in it)  {
+
+                        setloc(loca,it.indexOf(loca))
+
+                    }
+
 
                 }
+
+
             }
         })
 
@@ -131,8 +136,7 @@ private lateinit var wordViewModel: feeViewModel
 
       override fun onMarkerClick(hel: Marker): Boolean {
 
-          val myToast = Toast.makeText(applicationContext,hel.id.toString(),Toast.LENGTH_SHORT)
-          myToast.show()
+
           gotoupdate(hel.tag.toString())
 
 

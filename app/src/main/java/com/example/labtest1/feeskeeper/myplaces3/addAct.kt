@@ -5,17 +5,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.feeViewModel
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.mylocation
-import kotlinx.android.synthetic.main.activity_add.*
-import kotlinx.android.synthetic.main.activity_add.view.*
 
 
 private lateinit var wordViewModel: feeViewModel
@@ -53,28 +51,33 @@ class addAct : AppCompatActivity() {
 
             wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
 
-            wordViewModel.allfee.observe(this, Observer { words ->
+
+            wordViewModel?.allfee?.observe(this, Observer { words ->
 
                 words?.let {
 
-                    val myToast2 = Toast.makeText(applicationContext,"value is"+it[booze.toInt()].latitude1,Toast.LENGTH_SHORT)
-
-                    myToast2.show()
-
-                  id =  it[booze.toInt()].loction_Id2
+                    if(it !=null){
 
 
-                    longi.setText(it[booze.toInt()].latitude1.toString())
-                    lati.setText(it[booze.toInt()].longitude1.toString())
-                    locationsub.setText(it[booze.toInt()].subtitle1)
-                    locationtitle.setText(it[booze.toInt()].title1)
+
+                        id =  it[booze.toInt()]?.loction_Id2
+                        longi.setText(it[booze.toInt()]?.latitude1.toString())
+                        lati.setText(it[booze.toInt()]?.longitude1.toString())
+                        locationsub.setText(it[booze.toInt()]?.subtitle1)
+                        locationtitle.setText(it[booze.toInt()]?.title1)
+
+
+
+                    }
+
+
+
 
 
                 }
             })
 
         }
-
 
 
 
@@ -95,8 +98,7 @@ class addAct : AppCompatActivity() {
                         ) && TextUtils.isEmpty(locationtitle.text)
                     ) {
 
-                        val tu = Toast.makeText(applicationContext, "fuck", Toast.LENGTH_LONG)
-                        tu.show()
+
                     } else {
 
                         var word2 = mylocation(
@@ -115,12 +117,6 @@ class addAct : AppCompatActivity() {
             }else {
 
                     wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
-
-
-
-                    val tu = Toast.makeText(applicationContext, id.toString(), Toast.LENGTH_LONG)
-                    tu.show()
-
                     var word2 = mylocation(
                         id,
                         longi.text.toString().toDouble(),
@@ -142,6 +138,50 @@ class addAct : AppCompatActivity() {
 
 
         }
+
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        // Inflate the menu; this adds items to the action bar if it is
+
+
+        if (isupdate) {
+
+            super.onCreateOptionsMenu(menu)
+            menuInflater.inflate(R.menu.menu2, menu)
+            return true
+        }
+
+        return true
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.del) {
+
+
+            wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
+
+            wordViewModel.delete(id)
+
+            isupdate = false
+            finish()
+
+
+        }
+
+        return super.onOptionsItemSelected(item)
+
+    }
+
+
+
+
+
 
 
 

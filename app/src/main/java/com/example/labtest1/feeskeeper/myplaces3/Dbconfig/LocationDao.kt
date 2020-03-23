@@ -17,10 +17,9 @@ interface LocationDao {
     @Query("DELETE FROM location_table")
     suspend fun deleteAll()
 
+
     @Query("DELETE FROM location_table WHERE loction_Id = :userId")
     suspend fun deleteByUserId(userId: Int)
-
-    //fetch record by id
 
 
     @Update

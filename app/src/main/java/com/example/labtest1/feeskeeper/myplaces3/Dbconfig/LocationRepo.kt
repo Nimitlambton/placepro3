@@ -11,16 +11,21 @@ class LocationRepo(private val feeDao: LocationDao) {
 
     suspend fun insert(fee: mylocation) {
         feeDao.insert(fee)
-
-
     }
 
 
     suspend fun update(fee: mylocation) {
         feeDao.update(fee)
 
-
     }
+
+
+    suspend fun del(fee: Int) {
+
+        feeDao.deleteByUserId(fee)
+    }
+
+
 
 
 
