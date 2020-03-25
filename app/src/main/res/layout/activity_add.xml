@@ -91,12 +91,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="44dp"
         android:text="Save"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello" />
+
+    <Button
+        android:id="@+id/imgbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="52dp"
+        android:text="select image"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lati" />
 
-
+    <ImageView
+        android:id="@+id/hello"
+        android:layout_width="103dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lati"
+        tools:srcCompat="@tools:sample/avatars[4]" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

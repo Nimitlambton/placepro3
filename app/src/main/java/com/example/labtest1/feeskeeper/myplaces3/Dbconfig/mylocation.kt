@@ -12,5 +12,8 @@ class mylocation(
     @ColumnInfo(name="longitude") val longitude1:Double,
     @ColumnInfo(name="latitude") val latitude1:Double,
     @ColumnInfo(name="title") val title1:String,
+   @ColumnInfo(name="img") val img:String,
     @ColumnInfo(name="subtitle") val subtitle1:String)
+
+
 

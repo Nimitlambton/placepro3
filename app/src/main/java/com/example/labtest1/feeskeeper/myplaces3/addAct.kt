@@ -2,23 +2,33 @@ package com.example.labtest1.feeskeeper.myplaces3
 
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.feeViewModel
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.mylocation
+import kotlinx.android.synthetic.main.activity_add.*
+import java.io.ByteArrayOutputStream
+
 
 
 private lateinit var wordViewModel: feeViewModel
+private lateinit var e: String
+private lateinit var k: Integer
 
 private  var id = 0
+
 class addAct : AppCompatActivity() {
 
 
@@ -30,6 +40,14 @@ class addAct : AppCompatActivity() {
         var booze = 0
     }
 
+
+
+
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
@@ -40,7 +58,8 @@ class addAct : AppCompatActivity() {
         var locationsub = findViewById(R.id.subtitle) as EditText
         var locationtitle = findViewById(R.id.title) as EditText
         var save = findViewById(R.id.save) as Button
-
+        var imgbtn = findViewById(R.id.imgbtn) as Button
+   //     var img = findViewById(R.id.hello) as ImageView
 
 
         if (isupdate) {
@@ -61,24 +80,18 @@ class addAct : AppCompatActivity() {
                         lati.setText(it[booze.toInt()].longitude1.toString())
                         locationsub.setText(it[booze.toInt()].subtitle1)
                         locationtitle.setText(it[booze.toInt()].title1)
+                        val po =it[booze].img.toString()
+                        val k =  Base64.decode(po,Base64.DEFAULT)
+                        val image = BitmapFactory.decodeByteArray(k, 0, k.size)
+                        hello.setImageBitmap(image)
 
 
                     }
-
-
-
-
 
                 }
             })
 
         }
-
-
-
-
-
-
 
 
             save.setOnClickListener {
@@ -100,6 +113,7 @@ class addAct : AppCompatActivity() {
                             longi.text.toString().toDouble(),
                             lati.text.toString().toDouble(),
                            locationtitle.text.toString(),
+                            e,
                             locationsub.text.toString()
                         )
 
@@ -116,7 +130,9 @@ class addAct : AppCompatActivity() {
                         longi.text.toString().toDouble(),
                         lati.text.toString().toDouble(),
                         locationtitle.text.toString(),
+                        e,
                         locationsub.text.toString())
+
 
                     wordViewModel.update(word2)
 
@@ -131,8 +147,51 @@ class addAct : AppCompatActivity() {
 
 
 
+
+        imgbtn.setOnClickListener {
+
+
+            var i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+             startActivityForResult(i,200)
+
         }
 
+
+
+        }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+        if (requestCode == 200){
+
+            var bmp = data?.extras?.get("data") as Bitmap
+
+
+            hello.setImageBitmap(bmp)
+
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+            e = Base64.encodeToString(byteArray, Base64.DEFAULT)
+
+
+
+            val toast = Toast.makeText(applicationContext, e, Toast.LENGTH_LONG)
+            toast.show()
+
+
+
+
+        }
+
+
+
+    }
 
 
 

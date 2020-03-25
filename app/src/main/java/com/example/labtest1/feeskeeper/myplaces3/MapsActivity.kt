@@ -82,6 +82,7 @@ private lateinit var wordViewModel: feeViewModel
 
 
         myMarker =  mMap.addMarker(MarkerOptions().position(PERTH).title(title2))
+        myMarker.showInfoWindow()
 
         myMarker.tag = pos
 

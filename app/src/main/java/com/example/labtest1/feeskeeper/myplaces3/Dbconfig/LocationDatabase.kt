@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
 
-@Database(entities = arrayOf(mylocation::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(mylocation::class), version = 2, exportSchema = false)
 
 abstract class LocationDatabase : RoomDatabase() {
 
@@ -27,7 +27,7 @@ abstract class LocationDatabase : RoomDatabase() {
                 scope.launch {
                     var fee = database.locationDao()
                     // Delete all content here.
-                   // fee.deleteAll()
+                    fee.deleteAll()
                    // val le = mylocation(0,4.5,6.0,"hellwoorld","thisisworld")
                    //fee.insert(le)
                 }
