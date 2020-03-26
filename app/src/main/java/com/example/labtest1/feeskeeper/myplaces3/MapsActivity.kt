@@ -1,10 +1,11 @@
 package com.example.labtest1.feeskeeper.myplaces3
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.activity_add.*
 
 
 private lateinit var wordViewModel: feeViewModel
@@ -64,12 +66,6 @@ private lateinit var wordViewModel: feeViewModel
         })
 
 
-
-
-
-
-
-
     }
 
     private fun setloc(loca: mylocation ,pos : Int) {
@@ -83,10 +79,15 @@ private lateinit var wordViewModel: feeViewModel
 
         myMarker =  mMap.addMarker(MarkerOptions().position(PERTH).title(title2))
         myMarker.showInfoWindow()
-
         myMarker.tag = pos
 
-         setidd(title2)
+
+        val po =loca.img.toString()
+        val k =  Base64.decode(po, Base64.DEFAULT)
+        val image = BitmapFactory.decodeByteArray(k, 0, k.size)
+        myMarker.setIcon(BitmapDescriptorFactory.fromBitmap(image))
+
+
 
 
         }
@@ -105,10 +106,6 @@ private lateinit var wordViewModel: feeViewModel
       }
 
 
-
-
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         // Inflate the menu; this adds items to the action bar if it is
@@ -123,17 +120,35 @@ private lateinit var wordViewModel: feeViewModel
 
         if (item.itemId == R.id.add) {
             ShowaddDetails()
+
         }
 
+        else if (item.itemId == R.id.li){
+
+            showli()
+
+        }
 
         return super.onOptionsItemSelected(item)
     }
+
+
 
     private fun ShowaddDetails() {
         val intent = Intent(this , addAct::class.java)
         addAct.isupdate = false
         startActivity(intent)
     }
+
+      private  fun showli(){
+
+
+          val intent = Intent(this , MainActivity::class.java)
+          startActivity(intent)
+
+      }
+
+
 
       override fun onMarkerClick(hel: Marker): Boolean {
 

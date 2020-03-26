@@ -9,4 +9,20 @@
         android:title="Item"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/li"
+        android:icon="@android:drawable/ic_menu_day"
+        android:title="Item"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/map"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Item"
+        app:showAsAction="ifRoom" />
+
+
+
+
 </menu>

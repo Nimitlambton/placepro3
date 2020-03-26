@@ -41,13 +41,6 @@ class addAct : AppCompatActivity() {
     }
 
 
-
-
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
@@ -80,6 +73,7 @@ class addAct : AppCompatActivity() {
                         lati.setText(it[booze.toInt()].longitude1.toString())
                         locationsub.setText(it[booze.toInt()].subtitle1)
                         locationtitle.setText(it[booze.toInt()].title1)
+
                         val po =it[booze].img.toString()
                         val k =  Base64.decode(po,Base64.DEFAULT)
                         val image = BitmapFactory.decodeByteArray(k, 0, k.size)
@@ -179,16 +173,7 @@ class addAct : AppCompatActivity() {
             val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
             e = Base64.encodeToString(byteArray, Base64.DEFAULT)
 
-
-
-            val toast = Toast.makeText(applicationContext, e, Toast.LENGTH_LONG)
-            toast.show()
-
-
-
-
         }
-
 
 
     }
@@ -215,6 +200,7 @@ class addAct : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.del) {
+
             wordViewModel.delete(id)
             isupdate = false
             finish()
@@ -225,13 +211,6 @@ class addAct : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
 
     }
-
-
-
-
-
-
-
 
 
     }
