@@ -19,11 +19,7 @@ private lateinit var wordViewModel: feeViewModel
 
 class MainActivity : AppCompatActivity() , onfeeclick {
 
-
-
-
     private val newWordActivityRequestCode = 1
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -97,16 +93,8 @@ class MainActivity : AppCompatActivity() , onfeeclick {
 
     override fun onitemclick(item: mylocation, position: Int) {
 
-
         Toast.makeText(this,item.title1+ "deleted", Toast.LENGTH_SHORT).show()
-
         wordViewModel.delete(item.loction_Id2)
-
-
-
-
-
-
 
     }
 

@@ -27,7 +27,12 @@ class FeeListAdapter internal constructor(context: Context , var bo : onfeeclick
 
 
              wordItemView.text = "Title ="+bc.title1 + "\n " +
-                     "Subtitle = " +bc.subtitle1 +
+                     "Name = " +bc.Name +
+                     "\nDate of birth = " +bc.Date +
+                     "\nCountry = " +bc.country +
+                     "\nGender = " +bc.Gender +
+
+                     "\nSubtitle = " +bc.subtitle1 +
                      "\n latitude ="+ bc.latitude1 +
                      "\nlongitude ="+bc.longitude1 +
                      "\nlongitudeID ="+bc.loction_Id2
@@ -46,8 +51,6 @@ class FeeListAdapter internal constructor(context: Context , var bo : onfeeclick
                  action.onitemclick(bc,adapterPosition)
 
              }
-
-
 
          }
 

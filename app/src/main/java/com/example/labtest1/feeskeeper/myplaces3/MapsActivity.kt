@@ -161,6 +161,7 @@ private lateinit var wordViewModel: feeViewModel
 
 
       private fun gotoupdate(title: String) {
+
           val intent = Intent(this , addAct::class.java)
          addAct.booze = title.toInt()
           addAct.isupdate = true

@@ -1,6 +1,7 @@
 package com.example.labtest1.feeskeeper.myplaces3
 
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,17 +11,18 @@ import android.text.TextUtils
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.feeViewModel
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.mylocation
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.android.synthetic.main.activity_gender.*
 import java.io.ByteArrayOutputStream
-
+import java.util.*
 
 
 private lateinit var wordViewModel: feeViewModel
@@ -31,13 +33,12 @@ private  var id = 0
 
 class addAct : AppCompatActivity() {
 
-
-
-
     companion object {
 
         var isupdate = false
         var booze = 0
+        var country = ""
+        var gender = ""
     }
 
 
@@ -52,8 +53,55 @@ class addAct : AppCompatActivity() {
         var locationtitle = findViewById(R.id.title) as EditText
         var save = findViewById(R.id.save) as Button
         var imgbtn = findViewById(R.id.imgbtn) as Button
-   //     var img = findViewById(R.id.hello) as ImageView
+        var  date = findViewById(R.id.dob) as EditText
+        val datePicker = findViewById<DatePicker>(R.id.datePicker1)
+        var countrybtn  =  findViewById(R.id.Selectcon) as Button
+        var genderbtn  =  findViewById(R.id.Selectgen) as Button
+        var countrylabel =  findViewById(R.id.selectc) as TextView
+        var genderlabel = findViewById(R.id.mygender) as TextView
 
+
+
+        countrylabel.setText(country)
+        genderlabel.setText(gender)
+
+
+
+        datePicker.visibility = View.INVISIBLE
+
+        date.setOnClickListener{
+
+            closeKeyboard()
+            datePicker.visibility = View.VISIBLE
+
+            val today = Calendar.getInstance()
+            datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+                today.get(Calendar.DAY_OF_MONTH)
+
+            ){
+                    view, year, month, day ->
+                val month = month + 1
+                val msg = "$day/$month/$year"
+                System.out.println(msg)
+                date.setText(msg)
+            }
+
+
+        }
+
+        countrybtn.setOnClickListener {
+
+
+            gotocountry()
+
+
+        }
+
+        genderbtn.setOnClickListener {
+
+
+            gotogender()
+        }
 
         if (isupdate) {
 
@@ -73,13 +121,15 @@ class addAct : AppCompatActivity() {
                         lati.setText(it[booze.toInt()].longitude1.toString())
                         locationsub.setText(it[booze.toInt()].subtitle1)
                         locationtitle.setText(it[booze.toInt()].title1)
+                        name.setText(it[booze.toInt()].Name)
+                        dob.setText(it[booze.toInt()].Date)
+                        countrylabel.setText(it[booze.toInt()].country)
+                        genderlabel.setText(it[booze.toInt()].Gender)
 
                         val po =it[booze].img.toString()
                         val k =  Base64.decode(po,Base64.DEFAULT)
                         val image = BitmapFactory.decodeByteArray(k, 0, k.size)
                         hello.setImageBitmap(image)
-
-
                     }
 
                 }
@@ -94,19 +144,20 @@ class addAct : AppCompatActivity() {
 
                 if(!isupdate) {
 
-                    if (TextUtils.isEmpty(longi.text) && TextUtils.isEmpty(lati.text) && TextUtils.isEmpty(
-                            locationsub.text
-                        ) && TextUtils.isEmpty(locationtitle.text)
-                    ) {
+                    if (TextUtils.isEmpty(longi.text) && TextUtils.isEmpty(lati.text) && TextUtils.isEmpty(locationsub.text) && TextUtils.isEmpty(locationtitle.text) && TextUtils.isEmpty(name.text)   && TextUtils.isEmpty(dob.text)  ) {
 
 
                     } else {
 
                         var word2 = mylocation(
                             0,
+                            name.text.toString(),
+                            date.text.toString(),
+                            country,
+                            gender,
+                            locationtitle.text.toString(),
                             longi.text.toString().toDouble(),
                             lati.text.toString().toDouble(),
-                           locationtitle.text.toString(),
                             e,
                             locationsub.text.toString()
                         )
@@ -121,9 +172,13 @@ class addAct : AppCompatActivity() {
                     wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
                     var word2 = mylocation(
                         id,
+                        name.text.toString(),
+                        date.text.toString(),
+                        country,
+                        gender,
+                        locationtitle.text.toString(),
                         longi.text.toString().toDouble(),
                         lati.text.toString().toDouble(),
-                        locationtitle.text.toString(),
                         e,
                         locationsub.text.toString())
 
@@ -154,6 +209,23 @@ class addAct : AppCompatActivity() {
 
 
         }
+
+    private fun gotogender() {
+
+        val intent = Intent(this, genderAct::class.java)
+
+        startActivity(intent)
+
+    }
+
+    private fun gotocountry() {
+
+
+        val intent = Intent(this, CountryAct::class.java)
+
+        startActivity(intent)
+
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -211,7 +283,16 @@ class addAct : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
 
     }
+    private fun closeKeyboard() {
 
+
+        val view = this.currentFocus
+        if (view != null) {
+            val imm =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
 
     }
 
