@@ -14,12 +14,11 @@
         android:background="@android:color/holo_orange_light" />
 
 
-
     <ImageView
         android:id="@+id/img"
-        android:layout_width="333dp"
-        android:layout_height="115dp"
-        android:layout_margin="8dp"
-        android:scaleType="fitCenter" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:background="@android:color/holo_orange_light"/>
 
 </LinearLayout>

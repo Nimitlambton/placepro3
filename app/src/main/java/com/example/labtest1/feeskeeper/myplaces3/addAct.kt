@@ -1,6 +1,8 @@
 package com.example.labtest1.feeskeeper.myplaces3
 
 
+import android.R.attr
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.feeViewModel
 import com.example.labtest1.feeskeeper.myplaces3.Dbconfig.mylocation
 import kotlinx.android.synthetic.main.activity_add.*
-import kotlinx.android.synthetic.main.activity_gender.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -62,7 +63,7 @@ class addAct : AppCompatActivity() {
 
 
 
-        countrylabel.setText(country)
+
         genderlabel.setText(gender)
 
 
@@ -114,8 +115,10 @@ class addAct : AppCompatActivity() {
 
                 words.let {
 
+
                     if(it != null && isupdate){
 
+                        var countrylabel =  findViewById(R.id.selectc) as TextView
                         id =  it[booze.toInt()].loction_Id2
                         longi.setText(it[booze.toInt()].latitude1.toString())
                         lati.setText(it[booze.toInt()].longitude1.toString())
@@ -212,18 +215,20 @@ class addAct : AppCompatActivity() {
 
     private fun gotogender() {
 
+        //val intent = Intent(this, genderAct::class.java)
+
+        //startActivity(intent)
         val intent = Intent(this, genderAct::class.java)
 
-        startActivity(intent)
+        startActivityForResult(intent, 2);
+
 
     }
 
     private fun gotocountry() {
 
-
         val intent = Intent(this, CountryAct::class.java)
-
-        startActivity(intent)
+        startActivityForResult(intent, 1);
 
     }
 
@@ -246,6 +251,39 @@ class addAct : AppCompatActivity() {
             e = Base64.encodeToString(byteArray, Base64.DEFAULT)
 
         }
+
+     else if (requestCode == 1){
+
+            if (resultCode === Activity.RESULT_OK) {
+
+
+                var countrylabel =  findViewById(R.id.selectc) as TextView
+                countrylabel.text = country
+
+            }
+
+
+        }
+
+
+
+        else if (requestCode == 2){
+
+            if (resultCode === Activity.RESULT_OK) {
+
+
+                var genderlabel = findViewById(R.id.mygender) as TextView
+                genderlabel.text = gender
+
+
+            }
+
+
+        }
+
+
+
+
 
 
     }

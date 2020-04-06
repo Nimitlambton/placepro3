@@ -40,6 +40,9 @@ private lateinit var wordViewModel: feeViewModel
 
         mMap = googleMap
         mMap.clear()
+
+
+
          wordViewModel = ViewModelProvider(this).get(feeViewModel::class.java)
         wordViewModel.allfee.observe(this, Observer { words ->
 
@@ -81,24 +84,20 @@ private lateinit var wordViewModel: feeViewModel
         myMarker.showInfoWindow()
         myMarker.tag = pos
 
-
-        val po =loca.img.toString()
+//badal raha h b64 btm
+        val po = loca.img.toString()
         val k =  Base64.decode(po, Base64.DEFAULT)
         val image = BitmapFactory.decodeByteArray(k, 0, k.size)
         myMarker.setIcon(BitmapDescriptorFactory.fromBitmap(image))
 
-
-
-
+        
         }
 
       private fun setidd(title: String): String {
-
           return title2
 
 
       }
-
       private fun getidd(): String {
 
           return title2
@@ -108,7 +107,7 @@ private lateinit var wordViewModel: feeViewModel
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        // Inflate the menu; this adds items to the action bar if it is
+
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -142,7 +141,6 @@ private lateinit var wordViewModel: feeViewModel
 
       private  fun showli(){
 
-
           val intent = Intent(this , MainActivity::class.java)
           startActivity(intent)
 
@@ -163,7 +161,7 @@ private lateinit var wordViewModel: feeViewModel
       private fun gotoupdate(title: String) {
 
           val intent = Intent(this , addAct::class.java)
-         addAct.booze = title.toInt()
+           addAct.booze = title.toInt()
           addAct.isupdate = true
           startActivity(intent)
       }

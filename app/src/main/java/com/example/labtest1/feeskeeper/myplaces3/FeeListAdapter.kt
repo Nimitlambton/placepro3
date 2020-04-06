@@ -36,7 +36,6 @@ class FeeListAdapter internal constructor(context: Context , var bo : onfeeclick
                      "\n latitude ="+ bc.latitude1 +
                      "\nlongitude ="+bc.longitude1 +
                      "\nlongitudeID ="+bc.loction_Id2
-
              val po =bc.img
              val k =  Base64.decode(po, Base64.DEFAULT)
              val image = BitmapFactory.decodeByteArray(k, 0, k.size)
@@ -61,7 +60,6 @@ class FeeListAdapter internal constructor(context: Context , var bo : onfeeclick
 
         val current = feel[position]
        holder.initizliaze(current,bo)
-
 
 
     }

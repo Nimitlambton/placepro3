@@ -32,9 +32,19 @@ class genderadpt(val items : ArrayList<String>, val context: Context) : Recycler
 
             addAct.gender = items.get(position)
 
-            val ieventreport = Intent(this.context, addAct::class.java)
 
-            (context as Activity).finish()
+
+
+            val returnIntent = Intent()
+            returnIntent.putExtra("zyz",items.get(position));
+            val abc = context as Activity
+            abc.setResult(Activity.RESULT_OK,returnIntent);
+            abc.finish()
+
+
+
+
+
 
 
         }

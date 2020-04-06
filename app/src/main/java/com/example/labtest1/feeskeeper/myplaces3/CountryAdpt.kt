@@ -1,5 +1,6 @@
 package com.example.labtest1.feeskeeper.myplaces3
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -37,8 +38,15 @@ class AnimalAdapter(val items : ArrayList<String>, val context: Context) : Recyc
 
             addAct.country = items.get(position)
 
-            val ieventreport = Intent(this.context, addAct::class.java)
-            this.context.startActivity(ieventreport)
+            //val ieventreport = Intent(this.context, addAct::class.java)
+            //this.context.startActivity(ieventreport)
+
+            val returnIntent = Intent()
+            returnIntent.putExtra("abc",items.get(position));
+            val abc = context as Activity
+            abc.setResult(Activity.RESULT_OK,returnIntent);
+            abc.finish()
+
 
 
         }
